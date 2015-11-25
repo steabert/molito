@@ -1,0 +1,32 @@
+#!/usr/bin/python
+
+import sys
+
+from optparse import OptionParser
+
+from PyQt4.QtGui import QApplication
+from gui import MainWindow
+
+usage = "usage: %prog [options] filename"
+parser = OptionParser(usage=usage)
+parser.add_option("-q", "--quality", type="int", help="quality (0 = wireframe, 1-6 = ball and stick)")
+
+(options, args) = parser.parse_args()
+
+# check presence of file name
+if len(args) < 1:
+        print(usage)
+        sys.exit()
+else:
+        filename = args[0]
+
+# set defaults for quality
+if options.quality is None:
+        quality = 4
+else:
+        quality = options.quality
+
+app = QApplication(sys.argv)
+window = MainWindow(filename, quality)
+window.show()
+app.exec_()
